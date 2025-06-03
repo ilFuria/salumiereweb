@@ -1,6 +1,10 @@
 defmodule Cliente do
   use GenServer
 
+  @topic_prefix "cliente:"
+
+  defp topic(nome), do: @topic_prefix <> nome
+
   def start_link(name) do
     GenServer.start_link(__MODULE__, [], name: via_tuple(name))
   end
@@ -10,18 +14,21 @@ defmodule Cliente do
   end
 
   def accodati(name, numero) do
-    GenServer.cast(via_tuple(name), {:accodati, numero})
+    GenServer.cast(via_tuple(name), {:accodati, numero, name})
   end
 
-  def handle_cast({:accodati, numero}, _state) do
+  def handle_cast({:accodati, numero, name}, _state) do
+    notifica(numero, name)
     {:noreply, numero}
   end
 
-  def handle_info({:avanti, _nome}, stato) when stato > 1 do
+  def handle_info({:avanti, nome}, stato) when stato > 1 do
+    notifica(stato-1, nome)
     {:noreply, stato - 1}
   end
 
   def handle_info({:avanti, nome}, 1) do
+    notifica(0,nome)
     SalumiereClientiRegistry.deregistra(nome)
     {:stop, :normal, 0}
   end
@@ -29,4 +36,8 @@ defmodule Cliente do
   defp via_tuple(name) do
     {:via, Registry, {Cliente.Registry, name}}
   end
+
+  defp notifica(posizione, nome) do
+   Phoenix.PubSub.broadcast(Salumiereweb.PubSub, topic(nome), {:aggiorna, posizione})
+   end
 end

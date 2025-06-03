@@ -1,0 +1,16 @@
+<h2>Registrazione cliente</h2>
+
+<.form for={%{}} action={~p"/clienti"} method="post">
+  <label for="nome">Nome cliente:</label>
+  <input name="nome" id="nome" type="text" />
+
+  <%= if @salumiere do %>
+    <input type="hidden" name="salumiere" value={@salumiere} />
+    <p>Registrazione per il salumiere: <b>{@salumiere}</b></p>
+  <% else %>
+    <label for="salumiere">Salumiere:</label>
+    <input name="salumiere" id="salumiere" type="text" />
+  <% end %>
+
+  <button type="submit">Conferma</button>
+</.form>

@@ -25,8 +25,11 @@ defmodule SalumierewebWeb.Router do
 
     get "/salumieri/new", SalumiereController, :new
     post "/salumieri", SalumiereController, :create
-    get "/salumieri/:nome", SalumiereController, :show
-    end
+    live "/salumieri/:nome", SalumiereLive
+    get "/clienti/new", ClienteController, :new
+    post "/clienti", ClienteController, :create
+    live "/clienti/:nome", ClienteLive
+  end
 
   # Other scopes may use custom stacks.
   # scope "/api", SalumierewebWeb do
