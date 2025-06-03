@@ -10,6 +10,7 @@ defmodule SalumiereClientiRegistry do
   end
 
   def notifica(salumiere) do
+    IO.puts("TEST")
     GenServer.cast(__MODULE__, {:notifica, salumiere})
   end
 
@@ -37,11 +38,12 @@ defmodule SalumiereClientiRegistry do
 
   def handle_cast({:notifica, salumiere}, stato) do
     clienti = Map.get(stato, salumiere, MapSet.new())
-
     Enum.each(clienti, fn nome ->
       case Registry.lookup(Cliente.Registry, nome) do
-        [{pid, _}] -> send(pid, {:avanti, nome})
-        [] -> :ignore
+        [{pid, _}] -> 
+        send(pid, {:avanti, nome})
+        [] -> 
+ IO.puts(">>> cliente #{nome} NON trovato nel Registry")
       end
     end)
 

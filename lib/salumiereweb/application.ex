@@ -13,11 +13,13 @@ defmodule Salumiereweb.Application do
       {Phoenix.PubSub, name: Salumiereweb.PubSub},
       # Start the Finch HTTP client for sending emails
       {Finch, name: Salumiereweb.Finch},
+      {Registry, keys: :unique, name: Cliente.Registry},
+      {Registry, keys: :unique, name: Salumiere.Registry},
       # Start a worker by calling: Salumiereweb.Worker.start_link(arg)
       # {Salumiereweb.Worker, arg},
       # Start to serve requests, typically the last entry
       SalumierewebWeb.Endpoint,
-      # SalumiereClienteRegistry,
+      SalumiereClientiRegistry,
       SalSupervisor,
       ClienteSupervisor
     ]

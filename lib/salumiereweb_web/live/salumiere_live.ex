@@ -25,7 +25,9 @@ end
   end
 
   def handle_event("scoda", _params, socket) do
-    Salumiere.advance(socket.assigns.nome)
+nome = socket.assigns.nome
+  IO.puts(">>> ADVANCE del salumiere #{nome}")
+  Salumiere.advance(nome)
     {:noreply, socket}
   end
 end

@@ -6,7 +6,7 @@ defmodule SalumierewebWeb.ClienteController do
   end
 
   def create(conn, %{"nome" => nome, "salumiere" => salumiere}) do
-    case ClienteSupervisor.crea(salumiere, nome) do
+    case ClienteSupervisor.crea(nome, salumiere) do
       :ok ->
         redirect(conn, to: ~p"/clienti/#{nome}?salumiere=#{salumiere}")
 

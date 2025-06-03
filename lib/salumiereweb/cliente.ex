@@ -37,7 +37,16 @@ defmodule Cliente do
     {:via, Registry, {Cliente.Registry, name}}
   end
 
+def numero(nome) do
+  GenServer.call(via_tuple(nome), :get)
+end
+
+def handle_call(:get, _from, stato) do
+  {:reply, {:ok, stato}, stato}
+end
+
   defp notifica(posizione, nome) do
+ IO.inspect("Broadcast a #{topic(nome)} con #{posizione}")
    Phoenix.PubSub.broadcast(Salumiereweb.PubSub, topic(nome), {:aggiorna, posizione})
    end
 end
