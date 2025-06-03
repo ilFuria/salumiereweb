@@ -16,7 +16,10 @@ defmodule Salumiereweb.Application do
       # Start a worker by calling: Salumiereweb.Worker.start_link(arg)
       # {Salumiereweb.Worker, arg},
       # Start to serve requests, typically the last entry
-      SalumierewebWeb.Endpoint
+      SalumierewebWeb.Endpoint,
+      # SalumiereClienteRegistry,
+      SalSupervisor,
+      ClienteSupervisor
     ]
 
     # See https://hexdocs.pm/elixir/Supervisor.html

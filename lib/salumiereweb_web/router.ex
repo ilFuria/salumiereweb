@@ -20,6 +20,14 @@ defmodule SalumierewebWeb.Router do
     get "/", PageController, :home
   end
 
+  scope "/", SalumierewebWeb do
+    pipe_through :browser
+
+    get "/salumieri/new", SalumiereController, :new
+    post "/salumieri", SalumiereController, :create
+    get "/salumieri/:nome", SalumiereController, :show
+    end
+
   # Other scopes may use custom stacks.
   # scope "/api", SalumierewebWeb do
   #   pipe_through :api
